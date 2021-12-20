@@ -68,6 +68,11 @@ public class MysqlBinaryProtocolFieldReader extends AbstractMysqlFieldReader {
         if (b == null) {
             return null; // Don't continue parsing date field if it is null
         }
+        else if (b.length() == 0) {
+            LOGGER.warn("Encountered a zero length blob for column index {}", columnIndex);
+            return null;
+        }
+
         // length is 4
         if (b.length() != NativeConstants.BIN_LEN_DATE) {
             throw new RuntimeException(String.format("Invalid length when read MySQL DATE value. BIN_LEN_DATE is %d", b.length()));
