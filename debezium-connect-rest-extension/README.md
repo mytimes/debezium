@@ -26,6 +26,7 @@ This repository contains Debezium-specific extensions to Kafka Connect's REST AP
      - CONNECT_REST_EXTENSION_CLASSES=io.debezium.kcrestextension.DebeziumConnectRestExtension
 ```
 
+
 or set `rest.extension.classes=io.debezium.kcrestextension.DebeziumConnectRestExtension` in your Kafka Connect properties file.
 
 ## Contribution

@@ -45,7 +45,7 @@ public class MysqlBinaryProtocolFieldReader extends AbstractMysqlFieldReader {
 
         // if micro_seconds is 0, length is 8; otherwise length is 12
         if (b.length() != NativeConstants.BIN_LEN_TIME_NO_FRAC && b.length() != NativeConstants.BIN_LEN_TIME_WITH_MICROS) {
-            throw new RuntimeException(String.format("Invalid length when read MySQL TIME value. BIN_LEN_TIME is %d", b.length()));
+            LOGGER.warn(String.format("Invalid length when read MySQL TIME value. BIN_LEN_TIME is %d", b.length()));
         }
 
         final byte[] bytes = b.getBytes(1, (int) (b.length()));
@@ -75,7 +75,8 @@ public class MysqlBinaryProtocolFieldReader extends AbstractMysqlFieldReader {
 
         // length is 4
         if (b.length() != NativeConstants.BIN_LEN_DATE) {
-            throw new RuntimeException(String.format("Invalid length when read MySQL DATE value. BIN_LEN_DATE is %d", b.length()));
+            LOGGER.warn(String.format("Invalid length when read MySQL DATE value. BIN_LEN_DATE is %d", b.length()));
+            return null;
         }
 
         final byte[] bytes = b.getBytes(1L, (int) b.length());
@@ -103,7 +104,8 @@ public class MysqlBinaryProtocolFieldReader extends AbstractMysqlFieldReader {
         // if hour, minutes, seconds and micro_seconds are all 0, length is 4; if micro_seconds is 0, length is 7; otherwise length is 11
         if (b.length() != NativeConstants.BIN_LEN_DATE && b.length() != NativeConstants.BIN_LEN_TIMESTAMP_NO_FRAC
                 && b.length() != NativeConstants.BIN_LEN_TIMESTAMP_WITH_MICROS) {
-            throw new RuntimeException(String.format("Invalid length when read MySQL DATETIME value. BIN_LEN_DATETIME is %d", b.length()));
+            LOGGER.warn(String.format("Invalid length when read MySQL DATETIME value. BIN_LEN_DATETIME is %d", b.length()));
+            return null;
         }
 
         final byte[] bytes = b.getBytes(1, (int) (b.length()));
